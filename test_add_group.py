@@ -73,6 +73,6 @@ class test_add_group(unittest.TestCase):
         self.wd.quit()
 
 
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()
 
