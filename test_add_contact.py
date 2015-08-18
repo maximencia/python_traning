@@ -19,56 +19,8 @@ class test_add_contact(unittest.TestCase):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
     
-    def test_(self):
-        success = True
-
-    #начало теста ###########################################################################################
-        wd = self.wd
-        self.go_to_homepage(wd)
-        self.login(wd, "admin", "secret")
-        self.open_new_contact_form(wd)
-
-    # # fill new contact form
-    #     form_add_contact_
-    #                      _group1  (main info)
-    #                             firstname
-    #                             middlename
-    #                             lastname
-    #                             nickname
-    #                             # пропущено добавление фото
-    #                             title
-    #                             company
-    #                             address
-
-    #                      _group2  (telephon & emails)
-    #                             home
-    #                             mobile
-    #                             work
-    #                             fax
-    #                             # email # 1 заполняется автоматически
-    #                             email2
-    #                             email3
-    #                             homepage
-
-    #                      _group3  (date & group)
-    #                             birthday
-    #                             anniversary
-    #                             # должна выбираться группа group
-    #                      _group4  (secondary )
-    #                             address2
-    #                             phone2
-    #                             notes
-
-        self.form_add_contact_group1(wd,add_contact_form.add_contact_group1(firstname="1",middlename="2",lastname=("lastname_" + str(now_time)),nickname="4",title="6",company="7",address="8"))
-        self.form_add_contact_group2(wd,add_contact_form.add_contact_group2(home="9",mobile="10",work="11",fax="12",email2="14",email3="15",homepage="16"))
-        self.form_add_contact_group3(wd)
-        self.form_add_contact_group4(wd, add_contact_form.add_contact_group4(address2="19",phone2="20",notes="21"))
-
-
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        wd.find_element_by_link_text("Logout").click()
-        self.assertTrue(success)
-     #конец теста ###########################################################################################
+    # def test_(self):
+    #     success = True
 
     def form_add_contact_group4(self, wd, add_contact_group4):
         # SECONDARY
@@ -158,6 +110,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_link_text("add new").click()
 
     def login(self, wd, login, password):
+        self.go_to_homepage(wd)
         # Login
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(login)
@@ -169,6 +122,76 @@ class test_add_contact(unittest.TestCase):
     def go_to_homepage(self, wd):
         # go to application
         wd.get("http://localhost/addressbook/")
+
+    #Объеденим группы в одном методе
+    def fill_add_contact_form(self, wd,
+                              group_1=add_contact_form.add_contact_group1,
+                              group_2=add_contact_form.add_contact_group2,
+                              group_4=add_contact_form.add_contact_group4):
+        self.open_new_contact_form(wd)
+        self.form_add_contact_group1(wd, group_1)
+        self.form_add_contact_group2(wd, group_2)
+        self.form_add_contact_group3(wd)
+        self.form_add_contact_group4(wd, group_4)
+        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+
+
+#начало теста ###########################################################################################
+    def test_test_add_contact(self):
+        wd = self.wd
+
+        self.login(wd, "admin", "secret")
+      # # fill new contact form
+    #     form_add_contact_
+    #                      _group1  (main info)
+    #                             firstname
+    #                             middlename
+    #                             lastname
+    #                             nickname
+    #                             # пропущено добавление фото
+    #                             title
+    #                             company
+    #                             address
+
+    #                      _group2  (telephon & emails)
+    #                             home
+    #                             mobile
+    #                             work
+    #                             fax
+    #                             # email # 1 заполняется автоматически
+    #                             email2
+    #                             email3
+    #                             homepage
+
+    #                      _group3  (date & group)
+    #                             birthday
+    #                             anniversary
+    #                             # должна выбираться группа group
+    #                      _group4  (secondary )
+    #                             address2
+    #                             phone2
+    #                             notes
+        self.fill_add_contact_form(wd,
+                                   group_1=add_contact_form.add_contact_group1(firstname="1",
+                                                                                  middlename="2",
+                                                                                  lastname=("lastname_" + str(now_time)),
+                                                                                  nickname="4",
+                                                                                  title="6",
+                                                                                  company="7",
+                                                                                  address="8"),
+                                   group_2=add_contact_form.add_contact_group2(home="9",
+                                                                               mobile="10",
+                                                                               work="11",
+                                                                               fax="12",
+                                                                               email2="14",
+                                                                               email3="15",
+                                                                               homepage="16"),
+                                   group_4=add_contact_form.add_contact_group4(address2="19",
+                                                                               phone2="20",
+                                                                               notes="21")
+                                   )
+        wd.find_element_by_link_text("Logout").click()
+     #конец теста ###########################################################################################
 
     def tearDown(self):
         self.wd.quit()
