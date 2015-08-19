@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import pytest,datetime
-from application import Application
-from group import add_contact_form
+import pytest
+from fixture.application import Application
+from model.group import add_contact_form
 
-now_time = datetime.datetime.now()
 
 @pytest.fixture
 def app(request):
@@ -41,17 +40,17 @@ def app(request):
     #                             phone2
     #                             notes
 def test_add_contact(app):
-    app.login(username="admin",password="secret")
+    app.session.login(username="admin",password="secret")
 
     app.fill_add_contact_form( group_1=add_contact_form.add_contact_group1(firstname="1",
                                                                           middlename="2",
-                                                                          lastname=("lastname_" + str(now_time)),
+                                                                          lastname=("lastname_" + str(app.time_now)),
                                                                           nickname="4",
                                                                           title="6",
                                                                           company="7",
                                                                           address="8"),
                                 group_2=add_contact_form.add_contact_group2(home="9",
-                                                                            mobile="10",
+                                                                             mobile="10",
                                                                             work="11",
                                                                             fax="12",
                                                                             email2="14",
@@ -61,4 +60,4 @@ def test_add_contact(app):
                                                                             phone2="20",
                                                                             notes="21")
                        )
-    app.logout()
+    app.session.logout()
