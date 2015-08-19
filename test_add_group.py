@@ -12,12 +12,12 @@ def app(request):
     return fixture
 
 ########################################################################################################################
-def test_test_add_group(app):
+def test_add_group(app):
     app.login(username="admin",password="secret")
     app.create_group(Group(name="123_" + str(now_time),header= "123_" + str(now_time),footer= "123"))
     app.logout()
 
-def test_test_add_empty_group(app):
+def test_add_empty_group(app):
     app.login(username="admin",password="secret")
     app.create_group(Group(name="",header= "",footer= ""))
     app.logout()
