@@ -11,6 +11,11 @@ class ContactHelper:
         # add_new_contact_form
         wd.find_element_by_link_text("add new").click()
 
+    def open_home_form(self):
+        wd = self.app.wd
+        # add_new_contact_form
+        wd.find_element_by_link_text("home").click()
+
     def create(self,Contact):
         wd = self.app.wd
         self.open_new_contact_form()
@@ -54,5 +59,12 @@ class ContactHelper:
         self.app.fill_text_field(name="notes",send_keys_parameters=Contact.notes)
 
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
 
 
