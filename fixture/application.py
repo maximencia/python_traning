@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
 from selenium.webdriver.firefox.webdriver import WebDriver
-import datetime
 from fixture.session_f import SessionHelper
 from fixture.group_f import GroupHelper
 from fixture.contact_f import ContactHelper
@@ -25,9 +24,6 @@ class Application:
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
-
-    def time_now(self):
-        return datetime.datetime.now()
 
     def destroy(self):
         self.wd.quit()
