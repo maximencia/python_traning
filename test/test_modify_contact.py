@@ -21,8 +21,9 @@ def test_modify_first_group(app):
                                               email3="15",
                                               homepage="16",
                                               address2="19",
-                                              phone2="20",
-                                              notes="21+m"))
+                                              phone2="20"#,
+                                             # notes="21+m"
+                                             ))
     app.session.logout()
 
 

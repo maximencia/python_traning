@@ -14,12 +14,13 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
- # заполнение  тестовых полей
+ # заполнение  тестовых полей name- имя поля; send_keys_parameters - текст для заполнения
     def fill_text_field(self,name,send_keys_parameters):
         wd = self.wd
-        wd.find_element_by_name(name).click()
-        wd.find_element_by_name(name).clear()
-        wd.find_element_by_name(name).send_keys(send_keys_parameters)
+        if send_keys_parameters is not None:
+            wd.find_element_by_name(name).click()
+            wd.find_element_by_name(name).clear()
+            wd.find_element_by_name(name).send_keys(send_keys_parameters)
 
     def open_home_page(self):
         wd = self.wd

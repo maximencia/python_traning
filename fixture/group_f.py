@@ -33,23 +33,28 @@ class GroupHelper:
         # return to group page
         self.return_to_group_page()
 
-    def delete_first_group(self):
+    def select_first_group(self):
         wd = self.app.wd
         self.open_group_page()
-        #Select first group
+        # Select first group
         wd.find_element_by_name("selected[]").click()
+
+    def delete_first_group(self):
+        wd = self.app.wd
+        self.select_first_group()
         #submit
         wd.find_element_by_name("delete").click()
 
     def modify_first_group(self,Group):
         wd = self.app.wd
-        self.open_group_page()
-        #нужно обязательно выбрать что-то
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_group()
         wd.find_element_by_name("edit").click()
         self.fill_group_form(Group)
         wd.find_element_by_name("update").click()
         time.sleep(2)
+
+
+
 
 
 
