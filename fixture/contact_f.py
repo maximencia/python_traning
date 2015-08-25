@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
-import time
 
 class ContactHelper:
 
@@ -67,10 +66,8 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
         self.fill_contact_form(Contact)
-        time.sleep(2)
         #update submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
-        time.sleep(2)
 
     def delete_first_contact(self):
         wd = self.app.wd

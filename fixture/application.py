@@ -7,6 +7,13 @@ from fixture.contact_f import ContactHelper
 
 class Application:
 
+    def fixture_is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
