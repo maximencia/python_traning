@@ -5,7 +5,7 @@ from model.group import Contact
 now_time = datetime.datetime.now()
 
 def test_add_contact(app):
-    app.session.login(username="admin",password="secret")
+
     app.contact.create(Contact(firstname="1",
                               middlename="2",
                               lastname=("lastname_" + str(now_time)),
@@ -23,4 +23,4 @@ def test_add_contact(app):
                               address2="19",
                               phone2="20",
                               notes="21"))
-    app.session.logout()
+

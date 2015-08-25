@@ -5,7 +5,7 @@ from model.group import Contact
 now_time = datetime.datetime.now()
 
 def test_modify_first_group(app):
-    app.session.login(username="admin",password="secret")
+
     app.contact.modify_first_contact(Contact(firstname="1+m",
                                               middlename="2+m",
                                               lastname=("modify_lastname_" + str(now_time)),
@@ -24,6 +24,6 @@ def test_modify_first_group(app):
                                               phone2="20"#,
                                              # notes="21+m"
                                              ))
-    app.session.logout()
+
 
 
