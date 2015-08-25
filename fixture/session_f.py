@@ -15,7 +15,31 @@ class SessionHelper:
         self.app.fill_text_field(name="pass",send_keys_parameters=password)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
+    def is_logged_in_as(self,username):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//div/div[1]/form/b").text == "("+username+")"
+        print username
+
+    def ensure_login(self,username,password):
+        wd = self.app.wd
+        if self.is_logged_in():
+            if self.is_logged_in_as(username):
+                return
+            else:
+                self.logout()
+        self.login(username,password)
+
     def logout(self):
         wd = self.app.wd
         # logout
         wd.find_element_by_link_text("Logout").click()
+
+    # если на стринице есть ссылка на логаут, то нажимаем ее
+    def ensure_logout(self):
+        wd = self.app.wd
+        if self.is_logged_in():
+            self.logout()
+
+    def is_logged_in(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_link_text("Logout")) > 0
