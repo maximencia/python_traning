@@ -53,6 +53,14 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         time.sleep(2)
 
+    def count(self):
+        wd = self.app.wd
+        self.open_group_page()
+        # посчитаем количество чекпоксов на форме
+        return len(wd.find_elements_by_name("selected[]"))
+
+
+
 
 
 

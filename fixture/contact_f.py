@@ -62,6 +62,7 @@ class ContactHelper:
 
     def modify_first_contact(self,Contact):
         wd = self.app.wd
+        self.open_home_form()
         #нужно обязательно выбрать контакт
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
@@ -71,8 +72,15 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.open_home_form()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_home_form()
+        # посчитаем количество чекпоксов на форме
+        return len(wd.find_elements_by_name("selected[]"))
 
 
