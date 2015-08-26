@@ -8,14 +8,11 @@ class GroupHelper:
         self.app=app
 
     def open_group_page(self):
-        # init group creation
         wd = self.app.wd
+        # добавим проверку - если адрес страницы заканчивается на /group.php и на странице есть кноgка "создать группу:" тогда переходить не нужно
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0:
+            return
         wd.find_element_by_link_text("groups").click()
-
-    def return_to_group_page(self):
-        wd = self.app.wd
-        # return to group page
-        wd.find_element_by_link_text("group page").click()
 
     def fill_group_form(self,Group):
         self.app.fill_text_field(name="group_name",send_keys_parameters=Group.name)
@@ -30,8 +27,7 @@ class GroupHelper:
         self.fill_group_form(Group)
         # submit group creation
         wd.find_element_by_name("submit").click()
-        # return to group page
-        self.return_to_group_page()
+
 
     def select_first_group(self):
         wd = self.app.wd

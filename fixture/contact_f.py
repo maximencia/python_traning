@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
-
+import time
 class ContactHelper:
 
     def __init__(self,app):
@@ -8,12 +8,16 @@ class ContactHelper:
 
     def open_new_contact_form(self):
         wd = self.app.wd
-        # add_new_contact_form
+        # добавим проверку - если адрес страницы заканчивается на * и на странице есть кноgка "создать контакт" тогда переходить не нужно
+        if wd.current_url.endswith("/edit.php") and len(wd.find_elements_by_name("submit")) > 0:
+            return
         wd.find_element_by_link_text("add new").click()
 
     def open_home_form(self):
         wd = self.app.wd
-        # add_new_contact_form
+        # добавим проверку аналогично open_new_contact_form
+        if len(wd.find_elements_by_name("add")) >0  and len(wd.find_elements_by_name("searchstring")) > 0:
+            return
         wd.find_element_by_link_text("home").click()
 
     def fill_contact_form(self,Contact):
