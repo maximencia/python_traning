@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.group import Contact
+from model.contact import Contact
 
 def test_delete_first_contact(app):
     if app.contact.count() == 0:

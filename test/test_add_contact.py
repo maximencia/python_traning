@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
-from model.group import Contact
+from model.contact import Contact
 
 now_time = datetime.datetime.now()
 
