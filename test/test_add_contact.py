@@ -5,7 +5,7 @@ from model.contact import Contact
 now_time = datetime.datetime.now()
 
 def test_add_contact(app):
-
+    old_contacts = app.contact.get_contacts_list()
     app.contact.create(Contact(firstname="1",
                               middlename="2",
                               lastname=("lastname_" + str(now_time)),
@@ -23,4 +23,6 @@ def test_add_contact(app):
                               address2="19",
                               phone2="20",
                               notes="21"))
+    new_contacts = app.contact.get_contacts_list()
+    assert len(old_contacts) + 1  == len (new_contacts)
 

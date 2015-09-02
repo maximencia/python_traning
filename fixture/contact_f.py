@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
-import time
+from model.contact import Contact
 class ContactHelper:
 
     def __init__(self,app):
@@ -86,5 +86,21 @@ class ContactHelper:
         self.open_home_form()
         # посчитаем количество чекпоксов на форме
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contacts_list(self):
+        wd = self.app.wd
+        self.open_home_form()
+        contact=[]
+        # бежим по таблице замисывая "строки" в массив
+        rows =  wd.find_elements_by_xpath("//div[1]/div[4]/form[2]/table/tbody/tr[@name='entry']")
+        for elements in rows:
+            #теперь пробежим по столбцам текущего tr из цикла
+            column = elements.find_elements_by_tag_name("td")
+            firstname = column[2].text
+            lastname = column[1].text
+            id = elements.find_element_by_name("selected[]").get_attribute("value")
+            contact.append(Contact(lastname=lastname,firstname=firstname,id=id))
+        return contact
+
 
 

@@ -7,6 +7,7 @@ from fixture.contact_f import ContactHelper
 
 class Application:
 
+  # проверка валидности фикстуры через возврат url
     def fixture_is_valid(self):
         try:
             self.wd.current_url
@@ -35,6 +36,10 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+
+
+
 
 
 
