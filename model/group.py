@@ -25,7 +25,7 @@ class Group:
         return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name
 
     # вычисляем по группе ключ используемый для сравнения
-    # если у группы есть id то а если его нет то возвращается большое число maxsize (максимальное целое число)
+    # если у группы есть id то берем его  а если его нет то возвращается большое число maxsize (максимальное целое число)
     def id_or_max(self):
         if self.id:
             return int(self.id)

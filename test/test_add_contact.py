@@ -6,7 +6,7 @@ now_time = datetime.datetime.now()
 
 def test_add_contact(app):
     old_contacts = app.contact.get_contacts_list()
-    app.contact.create(Contact(firstname="1",
+    contact=Contact(firstname="1",
                               middlename="2",
                               lastname=("lastname_" + str(now_time)),
                               nickname="4",
@@ -22,7 +22,10 @@ def test_add_contact(app):
                               homepage="16",
                               address2="19",
                               phone2="20",
-                              notes="21"))
+                              notes="21")
+    app.contact.create(contact)
     new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts) + 1  == len (new_contacts)
+    old_contacts.append(contact)
+    assert sorted(old_contacts,key=Contact.id_or_max)  ==  sorted(new_contacts,key=Contact.id_or_max)
 

@@ -29,6 +29,24 @@ class Contact:
         self.notes=notes
         self.id=id
 
+    #отображение наших списков в консоли, смотреть можно через debug
+    def __repr__(self):
+        return "%s : %s : %s" % (self.id,self.firstname,self.lastname)
 
+    # сравнение по смыслу а не по физическому расположению объектов
+    def __eq__(self, other):
+        # в случае если идендификатор не определен он не учитывался при сравнении
+        return (self.id is None or other.id is None or self.id == other.id) \
+               and self.firstname == other.firstname  \
+               and self.lastname == other.lastname
+
+
+    # вычисляем по группе ключ используемый для сравнения
+    # если у группы есть id то а если его нет то возвращается большое число maxsize (максимальное целое число)
+    def id_or_max(self):
+        if self.id:
+            return int(self.id)
+        else:
+            return maxsize
 
 

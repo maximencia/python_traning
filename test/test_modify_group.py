@@ -17,6 +17,6 @@ def test_modify_first_group(app):
     app.group.modify_first_group(group)
     new_groups = app.group.get_group_list()
     assert len(old_groups) == len(new_groups)
-    #cnfhsq список обновим до модифицированных значений и сравним оба списка
+    # список обновим до модифицированных значений и сравним оба списка
     old_groups[0]= group
     assert sorted(old_groups,key=Group.id_or_max) == sorted(new_groups , key=Group.id_or_max)

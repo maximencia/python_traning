@@ -7,7 +7,7 @@ def test_modify_first_group(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="for modifdy"))
     old_contacts = app.contact.get_contacts_list()
-    app.contact.modify_first_contact(Contact(firstname="1+m",
+    contact=Contact(firstname="1+m",
                                               middlename="2+m",
                                               lastname=("modify_lastname_" + str(now_time)),
                                               nickname="4+m",
@@ -24,8 +24,16 @@ def test_modify_first_group(app):
                                               address2="19",
                                               phone2="20"#,
                                              # notes="21+m"
-                                             ))
+                                             )
+    contact.id = old_contacts[0].id
+    #[TEST]
+    app.contact.modify_first_contact(contact)
+
     new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts)  == len (new_contacts)
+    # список обновим до модифицированных значений и сравним оба списка
+    old_contacts[0]= contact
+    assert sorted(old_contacts,key=Contact.id_or_max)  ==  sorted(new_contacts,key=Contact.id_or_max)
+
 
 
