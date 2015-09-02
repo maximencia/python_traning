@@ -60,12 +60,12 @@ class GroupHelper:
         wd = self.app.wd
         self.open_group_page()
         # в консоли браузера можно набрать $$("span.group"); на странице со списком групп
-        groups=[]
+        group=[]
         for element in wd.find_elements_by_css_selector("span.group"):
             text = element.text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            groups.append(Group(name=text,id=id))
-        return groups
+            group.append(Group(name=text , id=id))
+        return group
 
 
 
