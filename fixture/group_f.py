@@ -28,6 +28,8 @@ class GroupHelper:
         self.fill_group_form(Group)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        # после добавления кешь становится не валидным - мы должны его сбросить
+        self.group_cache = None
 
 
     def select_first_group(self):
@@ -41,6 +43,8 @@ class GroupHelper:
         self.select_first_group()
         #submit
         wd.find_element_by_name("delete").click()
+        # после кешь становится не валидным - мы должны его сбросить
+        self.group_cache = None
 
     def modify_first_group(self,Group):
         wd = self.app.wd
@@ -48,7 +52,9 @@ class GroupHelper:
         wd.find_element_by_name("edit").click()
         self.fill_group_form(Group)
         wd.find_element_by_name("update").click()
-        time.sleep(2)
+        # после кешь становится не валидным - мы должны его сбросить
+        self.group_cache = None
+
 
     def count(self):
         wd = self.app.wd
@@ -56,16 +62,20 @@ class GroupHelper:
         # посчитаем количество чекпоксов на форме
         return len(wd.find_elements_by_name("selected[]"))
 
+
+    # Добавлено кеширование, и оно не должно работать после добавления изменения и удаления группы self.group_cache = None
+    group_cache = None
     def get_group_list(self):
-        wd = self.app.wd
-        self.open_group_page()
-        # в консоли браузера можно набрать $$("span.group"); на странице со списком групп
-        group=[]
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            group.append(Group(name=text , id=id))
-        return group
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_group_page()
+            # в консоли браузера можно набрать $$("span.group"); на странице со списком групп
+            self.group_cache=[]
+            for element in wd.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text , id=id))
+        return list(self.group_cache)
 
 
 
