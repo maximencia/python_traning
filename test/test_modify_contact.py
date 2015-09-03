@@ -28,9 +28,8 @@ def test_modify_first_group(app):
     contact.id = old_contacts[0].id
     #[TEST]
     app.contact.modify_first_contact(contact)
-
+    assert len(old_contacts)  == app.contact.count() # хеш функция - считает количество элементов
     new_contacts = app.contact.get_contacts_list()
-    assert len(old_contacts)  == len (new_contacts)
     # список обновим до модифицированных значений и сравним оба списка
     old_contacts[0]= contact
     assert sorted(old_contacts,key=Contact.id_or_max)  ==  sorted(new_contacts,key=Contact.id_or_max)
