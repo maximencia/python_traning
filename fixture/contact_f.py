@@ -63,6 +63,7 @@ class ContactHelper:
         self.open_new_contact_form()
         self.fill_contact_form(Contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
     def modify_first_contact(self,Contact):
         wd = self.app.wd
@@ -73,6 +74,7 @@ class ContactHelper:
         self.fill_contact_form(Contact)
         #update submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -80,6 +82,7 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -87,20 +90,25 @@ class ContactHelper:
         # посчитаем количество чекпоксов на форме
         return len(wd.find_elements_by_name("selected[]"))
 
+
+    # но нужно будет кешь чистить в удалении модификации и добавлении контакта
+    contact_cache =None
     def get_contacts_list(self):
-        wd = self.app.wd
-        self.open_home_form()
-        contact=[]
-        # бежим по таблице замисывая "строки" в массив
-        rows =  wd.find_elements_by_xpath("//div[1]/div[4]/form[2]/table/tbody/tr[@name='entry']")
-        for elements in rows:
-            #теперь пробежим по столбцам текущего tr из цикла
-            column = elements.find_elements_by_tag_name("td")
-            firstname = column[2].text
-            lastname = column[1].text
-            id = elements.find_element_by_name("selected[]").get_attribute("value")
-            contact.append(Contact(lastname=lastname,firstname=firstname,id=id))
-        return contact
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_form()
+            self.contact_cache=[]
+            # бежим по таблице замисывая "строки" в массив
+            rows =  wd.find_elements_by_xpath("//div[1]/div[4]/form[2]/table/tbody/tr[@name='entry']")
+            for elements in rows:
+                #теперь пробежим по столбцам текущего tr из цикла
+                column = elements.find_elements_by_tag_name("td")
+                firstname = column[2].text
+                lastname = column[1].text
+                id = elements.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(lastname=lastname,firstname=firstname,id=id))
+        return list(self.contact_cache)
+
 
 
 
