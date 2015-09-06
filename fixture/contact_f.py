@@ -67,19 +67,26 @@ class ContactHelper:
 
     def modify_first_contact(self,Contact):
         wd = self.app.wd
+        self.modify_contact_by_index(index=0)
+
+    def modify_contact_by_index(self,Contact,index):
+        wd = self.app.wd
         self.open_home_form()
-        #нужно обязательно выбрать контакт
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+        #нужно обязательно выбрать контакт а сделать это нужно нажав на "карандаш"
+        wd.find_elements_by_css_selector('img[alt="Edit"]')[index].click()
         self.fill_contact_form(Contact)
         #update submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.contact_cache = None
 
-    def delete_first_contact(self):
+    def delete_first_contact_(self):
+        wd = self.app.wd
+        self.delete_contact_by_index(index=0)
+
+    def delete_contact_by_index(self,index):
         wd = self.app.wd
         self.open_home_form()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
