@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
 from model.contact import Contact
+import re
+
 class ContactHelper:
 
     def __init__(self,app):
@@ -119,6 +121,7 @@ class ContactHelper:
                                                   work=all_phones[2], fax=all_phones[3]))
         return list(self.contact_cache)
 
+    # форма редактирования контакта
     def open_contact_edit_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -126,6 +129,7 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
 
+    # форма детальной информации о контакте
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -133,6 +137,7 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
 
+    # информация с формы редактирования контакта
     def get_contact_info_from_edit_page(self,index):
         wd = self.app.wd
         self.open_contact_edit_by_index(index)
@@ -146,6 +151,20 @@ class ContactHelper:
         return Contact(lastname=lastname,
                        firstname=firstname,
                        id=id, home=homephone,
+                       mobile=mobilephone,
+                       work=workphone,
+                       fax=secondaryphone)
+
+    # просмотр детальной информации о контакте
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text # полный текст и именно к нему будем применять regexp
+        homephone = re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(home=homephone,
                        mobile=mobilephone,
                        work=workphone,
                        fax=secondaryphone)
