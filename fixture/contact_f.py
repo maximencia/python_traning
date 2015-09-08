@@ -115,8 +115,9 @@ class ContactHelper:
                 firstname = column[2].text
                 lastname = column[1].text
                 id = elements.find_element_by_name("selected[]").get_attribute("value")
-                all_phones = column[5].text.splitlines()
+                all_phones = column[5].text
                 self.contact_cache.append(Contact(lastname=lastname,firstname=firstname,id=id,
+                                                  all_phones_from_home_page = all_phones,
                                                   home=all_phones[0], mobile=all_phones[1],
                                                   work=all_phones[2], fax=all_phones[3]))
         return list(self.contact_cache)
