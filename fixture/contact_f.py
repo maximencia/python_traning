@@ -116,10 +116,19 @@ class ContactHelper:
                 lastname = column[1].text
                 id = elements.find_element_by_name("selected[]").get_attribute("value")
                 all_phones = column[5].text
+                all_emails = column[4].text
                 self.contact_cache.append(Contact(lastname=lastname,firstname=firstname,id=id,
+
                                                   all_phones_from_home_page = all_phones,
-                                                  home=all_phones[0], mobile=all_phones[1],
-                                                  work=all_phones[2], fax=all_phones[3]))
+                                                  home=all_phones[0],
+                                                  mobile=all_phones[1],
+                                                  work=all_phones[2],
+                                                  fax=all_phones[3],
+
+                                                  all_emails_from_home_page = all_emails,
+                                                  email1=all_emails[0],
+                                                  email2=all_emails[1],
+                                                  email3=all_emails[2]))
         return list(self.contact_cache)
 
     # форма редактирования контакта
@@ -149,12 +158,19 @@ class ContactHelper:
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         workphone = wd.find_element_by_name("work").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        email1 = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+
         return Contact(lastname=lastname,
                        firstname=firstname,
                        id=id, home=homephone,
                        mobile=mobilephone,
                        work=workphone,
-                       fax=secondaryphone)
+                       fax=secondaryphone,
+                       email1=email1,
+                       email2=email2,
+                       email3=email3)
 
     # просмотр детальной информации о контакте
     def get_contact_from_view_page(self, index):
