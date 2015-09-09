@@ -118,17 +118,17 @@ class ContactHelper:
                 all_phones = column[5].text
                 all_emails = column[4].text
                 self.contact_cache.append(Contact(lastname=lastname,firstname=firstname,id=id,
-
                                                   all_phones_from_home_page = all_phones,
-                                                  home=all_phones[0],
-                                                  mobile=all_phones[1],
-                                                  work=all_phones[2],
-                                                  fax=all_phones[3],
-
+                                                  # home=all_phones[0],
+                                                  # mobile=all_phones[1],
+                                                  # work=all_phones[2],
+                                                  # fax=all_phones[3],
                                                   all_emails_from_home_page = all_emails,
-                                                  email1=all_emails[0],
-                                                  email2=all_emails[1],
-                                                  email3=all_emails[2]))
+                                                  # email1=all_emails[0],
+                                                  # email2=all_emails[1],
+                                                  # email3=all_emails[2]
+                                                  )
+                                          )
         return list(self.contact_cache)
 
     # форма редактирования контакта
