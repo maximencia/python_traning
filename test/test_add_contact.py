@@ -10,9 +10,15 @@ def random_string(prefix,maxlen):
     return prefix + "".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
 
 def random_phone(prefix,maxlen):
-    symbols = string.digits + "(" + ")" + "-" 
+    symbols = string.digits + "(" + ")" + "-"
     return prefix + "".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
 
+def random_email(prefix,maxlen):
+    symbols =  string.ascii_letters + string.digits
+    domen=string.ascii_lowercase #Константное перечисление букв из набора ASCII в нижнем регистре.
+    return prefix + ("".join([random.choice(symbols) for i in range (random.randrange(maxlen//2))]))+"@"+\
+           ("".join([random.choice(symbols) for i in range (random.randrange(maxlen//2))]))+"."+\
+            ("".join([random.choice(domen) for i in range (random.randint(2, 3))])) # Return a random integer N such that a <= N <= b.
 
 testdata = [Contact(firstname=random_string("firstname" , 10),
                      middlename=random_string("middlename" , 10),
@@ -25,8 +31,8 @@ testdata = [Contact(firstname=random_string("firstname" , 10),
                      mobile=random_phone("" , 10),
                      work=random_phone("" , 10),
                      fax=random_phone("" , 10),
-                     email2=random_string("email2" , 10),
-                     email3=random_string("email3" , 10),
+                     email2=random_email("email2" , 15),
+                     email3=random_email("email3" , 15),
                      homepage=random_string("homepage" , 10),
                      address2=random_string("address2" , 10),
                      phone2=random_phone("" , 10),
