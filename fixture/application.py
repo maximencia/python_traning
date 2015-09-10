@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Maxim.Rumyantsev'
-from selenium.webdriver.firefox.webdriver import WebDriver
+#from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium import webdriver
 from fixture.session_f import SessionHelper
 from fixture.group_f import GroupHelper
 from fixture.contact_f import ContactHelper
@@ -15,12 +16,22 @@ class Application:
         except:
             return False
 
-    def __init__(self):
-        self.wd = WebDriver()
+    def __init__(self,browser, base_url):
+        # параметр отвечает за запуск браузера бля тестов
+        if browser=="firefox":
+            self.wd = webdriver.Firefox()
+        elif browser=="chrome":
+            self.wd = webdriver.Chrome()
+        elif browser=="ie":
+            self.wd = webdriver.Ie()
+        else:
+            raise ValueError("Unrecognized browser %s" %browser)
+
         #self.wd.implicitly_wait(1)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        self.base_url= base_url
 
  # заполнение  тестовых полей name- имя поля; send_keys_parameters - текст для заполнения
     def fill_text_field(self,name,send_keys_parameters):
@@ -32,7 +43,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        wd.get(self.base_url)
 
     def destroy(self):
         self.wd.quit()
