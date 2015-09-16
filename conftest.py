@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest,datetime,json
+import pytest,datetime,json,os.path
 from fixture.application import Application
 
 now_time = datetime.datetime.now()
@@ -12,9 +12,12 @@ def app(request):
     global fixture
     global target
     browser = request.config.getoption("--browser")
+
     if target is None:
-        with open (request.config.getoption("--target")) as config_file:
+        path_to_config = os.path.join(os.path.dirname(os.path.abspath(__file__)),request.config.getoption("--target"))
+        with open(path_to_config) as config_file:
             target=json.load(config_file)
+    # если фикстура не создана или невалидна то создаем ее
     if fixture is None or not fixture.fixture_is_valid():
         fixture = Application(browser=browser,base_url=target['base_url'])
     fixture.session.ensure_login(username=target['username'],password=target['password'])
