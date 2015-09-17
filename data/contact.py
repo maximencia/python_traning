@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
+import datetime
+
+now_time = datetime.datetime.now()
 
 testdata = [
             Contact(firstname="1",
