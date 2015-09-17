@@ -15,4 +15,3 @@ def test_add_group(app, json_groups):
     o=sorted(old_groups,key=Group.id_or_max)
     t=sorted(new_groups,key=Group.id_or_max)
     assert sorted(old_groups,key=Group.id_or_max) == sorted(new_groups,key=Group.id_or_max)
-    p=1
