@@ -2,7 +2,7 @@
 import datetime
 from model.group import Group
 import random,string
-import json
+import jsonpickle
 import os.path
 import getopt
 import sys
@@ -48,4 +48,5 @@ file = os.path.join(os.path.dirname(os.path.abspath(__file__)),".." ,f)
 # откроем в режиме write
 with open(file , "w") as out:
     # сначала используем функцию для преобразования данных вначале а потом json.dump
-    out.write(json.dumps(testdata , default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json",indent=2)
+    out.write(jsonpickle.encode(testdata))

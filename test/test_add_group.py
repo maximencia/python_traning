@@ -4,8 +4,8 @@ from model.group import Group
 
 
 
-def test_add_group(app, data_groups):
-    group = data_groups #загружаем данные из файла C:\python_traning\python_traning\data\groups.py но через conftest
+def test_add_group(app, json_groups):
+    group = json_groups #загружаем данные из файла C:\python_traning\python_traning\data\groups.py но через conftest
     old_groups = app.group.get_group_list()
     #[TEST]
     app.group.create(group)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest,datetime,json,os.path
 from fixture.application import Application
-import importlib
+import importlib,jsonpickle
 
 now_time = datetime.datetime.now()
 
@@ -46,12 +46,20 @@ def pytest_addoption(parser):
 # def load_form_module(module):
 #     p=importlib.import_module("data.%s" % module).testdata
 #     return importlib.import_module("data.%s" % module).testdata
-def load_form_module(module):
+def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata
 
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
             p=fixture[5:]
-            testdata = load_form_module(fixture[5:]) # отрежем первые 5 символов
+            testdata = load_from_module(fixture[5:]) # отрежем первые 5 символов
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+        if fixture.startswith("json_"):
+            p=fixture[5:]
+            testdata = load_from_json(fixture[5:]) # отрежем первые 5 символов
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+
+def load_from_json(file):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"data/%s.json" % file)) as f:
+        return jsonpickle.decode(f.read())
