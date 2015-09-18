@@ -56,8 +56,7 @@ def load_from_json(file):
 def db(request):
     #читаем из файла конфигурации все что касается db
     db_config = load_config(request.config.getoption("--target"))['db']
-    dbfixtute=DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
-    dbfixture = DbFixture() # сделаем класс
+    dbfixture=DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password']) # сделан класс DbFixture
     def fin():
         dbfixture.destroy()
     request.addfinalizer(fin)
