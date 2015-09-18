@@ -32,7 +32,8 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--target", action="store", default="target.json") # имя файла с опциями по умолчанию
+    parser.addoption("--check_ui", action="store_true")
 
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata
@@ -52,7 +53,7 @@ def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"data/%s.json" % file)) as f:
         return jsonpickle.decode(f.read())
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def db(request):
     #читаем из файла конфигурации все что касается db
     db_config = load_config(request.config.getoption("--target"))['db']
@@ -61,6 +62,11 @@ def db(request):
         dbfixture.destroy()
     request.addfinalizer(fin)
     return dbfixture
+
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
 
 # функция загрузки из файла
 def load_config(from_file):
