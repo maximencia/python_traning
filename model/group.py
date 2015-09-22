@@ -18,8 +18,8 @@ class Group:
 
     #отображение наших списков в консоли, смотреть можно через debug
     def __repr__(self):
-        #return "%s:%s:%s:%s" % (self.id,self.name,self.header,self.footer )
-        return "%s:%s" % (self.id,self.name)
+        return "%s__:__%s__:__%s__:__%s" % (self.id,self.name,self.header,self.footer )
+        #return "%s:%s" % (self.id,self.name)
 
     # сравнение по смыслу а не по физическому расположению объектов
     def __eq__(self, other):
