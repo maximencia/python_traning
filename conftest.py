@@ -42,10 +42,12 @@ def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
             p=fixture[5:]
+            # загружаем данные из модуля например из C:\python_traning\python_traning\data\groups.py
             testdata = load_from_module(fixture[5:]) # отрежем первые 5 символов
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
         if fixture.startswith("json_"):
             p=fixture[5:]
+            # загружаем данные из файла
             testdata = load_from_json(fixture[5:]) # отрежем первые 5 символов
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
