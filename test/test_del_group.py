@@ -19,6 +19,7 @@ def test_delete_some_group(app,db,check_ui):
 
 
 # удаление всех групп != 0:  или оставляем 3 группы  > 3:
-# def test_del_all_group(app):
-#        while app.group.count() > 3:
-#              app.group.delete_group_by_index(randrange(app.group.count()))
+def test_del_all_group(app,db):
+        while app.group.count() > 0:
+              #app.group.delete_group_by_index(randrange(app.group.count()))
+              test_delete_some_group(app,db,check_ui="True")
