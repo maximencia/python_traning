@@ -41,10 +41,8 @@ class GroupHelper:
         # Select first group
         wd.find_elements_by_name("selected[]")[index].click()
 
-    def select_group_by_id(self,id):
+    def select_group_by_id(self, id):
         wd = self.app.wd
-        self.open_group_page()
-        # Select first group
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def delete_first_group(self):
@@ -79,6 +77,17 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         # после кешь становится не валидным - мы должны его сбросить
         self.group_cache = None
+
+    def modify_group_by_id(self,id,group_modify):
+         wd = self.app.wd
+         self.open_group_page()
+         self.select_group_by_id(id)
+         wd.find_element_by_name("edit").click()
+         self.fill_group_form(group_modify)
+         wd.find_element_by_name("update").click()
+        #[21.09.2015 10:57:34] Alexei Barantsev: на "честный" переход по ссылке:#[21.09.2015 10:56:56] Alexei Barantsev: при этом функция open_home_page просто вызывает wd.get(...), причём делает это сразу же после закрытия диалога. и удаление просто не успевает завершиться
+         wd.find_element_by_link_text("home")
+         self.group_cache = None # после кешь становится не валидным - мы должны его сбросить
 
     def count(self):
         wd = self.app.wd
