@@ -26,7 +26,7 @@ def test_modify_random_group(app):
 
 # Используем базу для загрузки списков
 def test_modify_random_group_2(app,db,check_ui):
-    mm = str(random.randint(0, 1000)) # 3 цифры из даты , достаточно случайные
+    mm = str(random.randint(100, 999)) # 3 цифры из даты , достаточно случайные
     # если не существует ни одной группы - создаем
     if len(db.get_group_list()) == 0:
          app.group.create(Group(name="Group for modify test"+mm))

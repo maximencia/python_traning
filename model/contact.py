@@ -35,7 +35,8 @@ class Contact:
 
     #отображение наших списков в консоли, смотреть можно через debug
     def __repr__(self):
-        return "%s : %s : %s" % (self.id,self.firstname,self.lastname)
+        return "%s:%s:%s" % (self.id,self.firstname,self.lastname)
+        #return "%s" % (self.id)
 
     # сравнение по смыслу а не по физическому расположению объектов
     def __eq__(self, other):

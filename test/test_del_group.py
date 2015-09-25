@@ -8,8 +8,9 @@ def test_delete_some_group(app,db,check_ui):
           app.group.create(Group(name="Group for delete"))
       old_groups = db.get_group_list()
       group=random.choice(old_groups)
+      id=group.id
       #[TEST]
-      app.group.delete_group_by_id(group.id)
+      app.group.delete_group_by_id(id)
       new_groups = db.get_group_list()
       assert len(old_groups)-1 == len(new_groups) # хеш функция - считает количество элементов
       old_groups.remove(group)

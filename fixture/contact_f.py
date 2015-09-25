@@ -79,6 +79,18 @@ class ContactHelper:
         self.fill_contact_form(Contact)
         #update submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        wd.find_element_by_link_text("home")
+        self.contact_cache = None
+
+    def modify_contact_by_id(self,Contact,id):
+        wd = self.app.wd
+        self.open_home_form()
+        #нужно обязательно выбрать контакт а сделать это нужно нажав на "карандаш"
+        wd.find_element_by_xpath("//a[@href='edit.php?id=%s']/img" % id).click()
+        self.fill_contact_form(Contact)
+        #update submit
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        wd.find_element_by_link_text("home")
         self.contact_cache = None
 
     def delete_first_contact_(self):
@@ -91,6 +103,17 @@ class ContactHelper:
         wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+        wd.find_element_by_link_text("home")
+        self.contact_cache = None
+
+    def delete_contact_by_id(self,id):
+        wd = self.app.wd
+        self.open_home_form()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
+        #[21.09.2015 10:57:34] Alexei Barantsev: на "честный" переход по ссылке:#[21.09.2015 10:56:56] Alexei Barantsev: при этом функция open_home_page просто вызывает wd.get(...), причём делает это сразу же после закрытия диалога. и удаление просто не успевает завершиться
+        wd.find_element_by_link_text("home")
         self.contact_cache = None
 
     def count(self):
