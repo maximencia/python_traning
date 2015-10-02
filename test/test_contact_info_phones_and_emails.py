@@ -2,6 +2,7 @@
 __author__ = 'Maxim.Rumyantsev'
 import re
 from random import randrange
+from model.contact import Contact
 
 # проверям что информация о телефоназ на главной странице совпадает с информацие телефонов на форме редактирования
 def test_phone_on_home_page(app):
@@ -52,3 +53,21 @@ def merge_email_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x!="",#удаляем пустые строки
                             filter(lambda x: x is not None,# удаляем все None
                                    [contact.email1, contact.email2, contact.email3])))
+
+
+#Задание №21: Переделать тесты для проверки информации о контактах на главной странице
+
+#Переделать тесты для проверки информации о контактах на главной странице -- на этот раз нужно реализовать сравнение
+# для всех записей, а не для одной случайно выбранной. А сравнивать -- с информацией, загруженной из базы данных.
+def test_assert_contact_info_home_and_db_for_all_contact(app,db):
+    contact_from_home_page= app.contact.get_contacts_list()
+    contact_from_db = db.get_contacts_list()
+    web=sorted(contact_from_home_page, key=Contact.id_or_max)
+    db= sorted(contact_from_db,        key=Contact.id_or_max)
+    assert web == db
+
+
+
+
+
+
