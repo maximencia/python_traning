@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
+from random import randrange
 
 def test_add_contact(app,data_contact):
     contact=data_contact
@@ -40,4 +41,6 @@ def test_add_contact_db(app,db,data_contact,check_ui):
     assert o  ==  n
     if check_ui:
         assert n  ==  sorted(app.contact.get_contacts_list(),key=Contact.id_or_max)
+
+
 
