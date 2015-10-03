@@ -156,6 +156,21 @@ class ContactHelper:
         wd.find_element_by_link_text("home")
         self.contact_cache = None
 
+    def delete_contact_from_group_by_id(self,id,group_name):
+        wd = self.app.wd
+        self.open_home_form()
+        #отфильтруем по группе:
+        # установим фильтр #выбор  имени группы
+        my_select = Select(wd.find_element_by_xpath("/html/body/div[@id='container']/div[@id='content']/form[@id='right']/select"))
+        my_select.select_by_visible_text(group_name)
+        self.contact_cache=[]
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        # жмем на кнопку удалит
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text("home")
+        self.contact_cache = None
+
+
     def delete_contact_by_id(self,id):
         wd = self.app.wd
         self.open_home_form()
